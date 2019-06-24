@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Form Builder</title>
+        <link rel="stylesheet" href="homepage.css">
+    </head>
+    <body>
+        <h1 class="pagehead">Form Builder</h1>
+
+        <button onclick="document.getElementById('loginform').style.display='block'" class="firstbutton">Login</button>
+        <div id="loginform" class="modal">
+            <span onclick="document.getElementById('loginform').style.display='none'"
+            class="close" title="Close Modal">&times;</span>
+            <form class="modal-content" action="loginuser.php" method="POST">
+                <div class="container">
+                    <h1>Log In</h1>
+                    <hr>
+                    <input type="hidden" name="form" value="L">
+                    <label for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="username" required>
+        
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+        
+                    <div class="container" style="background-color:#f1f1f1">
+                        <button type="button" onclick="document.getElementById('loginform').style.display='none'" class="cancelbtn">Cancel</button>
+                        <button type="submit" >Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <button onclick="document.getElementById('signupform').style.display='block'" class="firstbutton">Sign Up</button>
+        <div id="signupform" class="modal">
+            <span onclick="document.getElementById('signupform').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <form class="modal-content" action="loginuser.php" method="POST">
+                <div class="container">
+                    <h1>Sign Up</h1>
+                    <p>Please fill in this form to create an account.</p>
+                    <hr>
+                    <input type="hidden" name="form" value="S">
+                    <label for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="username" required>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+
+                    <label for="psw-repeat"><b>Repeat Password</b></label>
+                    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+                    <div class="clearfix">
+                        <button type="button" onclick="document.getElementById('signupform').style.display='none'" class="cancelbtn">Cancel</button>
+                        <button type="submit" class="signup">Sign Up</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
