@@ -1,6 +1,13 @@
 <?php
 include("database.php");
 
+function redirect() {
+    ob_start();
+    header('Location: userpage.php');
+    ob_end_flush();
+    die();
+}
+
 function loginuser() {
     $link=new mysqli("localhost","root","pass123","FormBuilder");
     $un=$_POST['username'];
@@ -8,7 +15,8 @@ function loginuser() {
     $sql="SELECT UN,PW FROM UserDets WHERE UN='$un' AND PW='$pw'";
     $check=$link->query($sql);
     if($check->num_rows==1){
-        echo "Login Successful";
+        $_SESSION['username']=$un;
+        redirect();
     }
     else{
         echo "Invalid Credentials";
@@ -28,6 +36,11 @@ function signupuser() {
         if($pw==$pwr){
             $sql="INSERT INTO UserDets VALUES ('$un','$pw')";
             $link->query($sql);
+            $sql="CREATE TABLE $un (
+                FormName varchar(25),
+                FormURL varchar(50),
+                FormDesc varchar(200) );";
+            $link->query($sql);
             echo "Signup Successful";
         }
         else{
@@ -41,6 +54,7 @@ function signupuser() {
     $link->close();
 }
 
+session_start();
 switch($_POST['form']){
     case 'L':
         loginuser();
