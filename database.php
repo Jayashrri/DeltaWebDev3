@@ -17,5 +17,12 @@ $link->query("CREATE TABLE IF NOT EXISTS UserDets (
 );");
 $link->commit();
 
+$link->query("CREATE TABLE IF NOT EXISTS FormList (
+    FormName varchar(25),
+    FormURL varchar(50),
+    FormOwner varchar(25),
+    FormDesc varchar(200)); ");
+$link->commit();
+
 $link->close();
 ?>

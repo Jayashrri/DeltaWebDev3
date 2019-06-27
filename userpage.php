@@ -7,15 +7,23 @@
         ob_end_flush();
         die();
     }
+
+    function generateURL() {
+        $link=new mysqli("localhost","root","pass123","FormBuilder");
+        $count=$link->query("SELECT COUNT(*) FROM FormList");
+        $count++;
+        $url=base_convert(number_format($count),10,32);
+        return $url;
+    }
     
     function newform(){
         $link=new mysqli("localhost","root","pass123","FormBuilder");
         $username=$_SESSION['username'];
         $formname=$_POST['formname'];
         $formdesc=$_POST['formdesc'];
-        $formurl=$formname.".php";
+        $formurl=generateURL().".php";
         $_SESSION['formname']=$formname;
-        $sql="INSERT INTO $username VALUES ('$formname', '$formurl', '$formdesc')";
+        $sql="INSERT INTO FormList VALUES ('$formname', '$formurl', '$username', '$formdesc')";
         $link->query($sql);
         $link->commit();
         $sql="CREATE TABLE $formname (Num int)";

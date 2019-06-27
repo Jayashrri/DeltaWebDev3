@@ -36,11 +36,6 @@ function signupuser() {
         if($pw==$pwr){
             $sql="INSERT INTO UserDets VALUES ('$un','$pw')";
             $link->query($sql);
-            $sql="CREATE TABLE $un (
-                FormName varchar(25),
-                FormURL varchar(50),
-                FormDesc varchar(200) );";
-            $link->query($sql);
             echo "Signup Successful";
         }
         else{
