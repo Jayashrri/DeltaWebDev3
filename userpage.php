@@ -10,10 +10,12 @@
 
     function generateURL() {
         $link=new mysqli("localhost","root","pass123","FormBuilder");
-        $count=$link->query("SELECT COUNT(*) FROM FormList");
-        $count++;
-        $url=base_convert(number_format($count),10,32);
-        return $url;
+        $result=$link->query("SELECT COUNT(*) AS total FROM FormList");
+        $data=mysqli_fetch_assoc($result);
+        $count=(int)$data['total'];
+        $url=base_convert($count,10,32);
+        $final="t_".$url;
+        return $final;
     }
     
     function newform(){
@@ -21,12 +23,12 @@
         $username=$_SESSION['username'];
         $formname=$_POST['formname'];
         $formdesc=$_POST['formdesc'];
-        $formurl=generateURL().".php";
-        $_SESSION['formname']=$formname;
+        $formurl=generateURL();
+        $_SESSION['formurl']=$formurl;
         $sql="INSERT INTO FormList VALUES ('$formname', '$formurl', '$username', '$formdesc')";
         $link->query($sql);
         $link->commit();
-        $sql="CREATE TABLE $formname (Num int)";
+        $sql="CREATE TABLE $formurl (Num int)";
         $link->query($sql);
         $link->commit();
         $link->close();
@@ -50,16 +52,19 @@
                         echo $_SESSION['username'];
                     ?></h3>
 
-        <button onclick="document.getElementById('createform').style.display='block'">Create Form</button>
+        <button class="firstbutton" onclick="document.getElementById('createform').style.display='block'">Create Form</button>
         <div id="createform" class="modal">
             <span onclick="document.getElementById('createform').style.display='none'"
             class="close" title="Close">&times;</span>
             <form class="modal-content" method="post" action="">
+            <div class="container">
+                <h1>Create Form</h1><hr>
                 <label for="formname"><b>Form Name</b></label>
-                <input type="text" placeholder="Enter Form Name" name="formname" required="required">
-                <label for="formdesc"><b>Form Name</b></label>
+                <input type="text" placeholder="Enter Form Name" name="formname" required="required"><br>
+                <label for="formdesc"><b>Form Description</b></label><br>
                 <textarea rows="5" cols="30" name="formdesc"></textarea>
                 <button type="submit" name="submit">Create Form</button>
+            </div>
             </form>
         </div>
     </body>
