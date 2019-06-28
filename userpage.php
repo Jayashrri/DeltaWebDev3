@@ -92,6 +92,7 @@
             </table>
         </div>
         <button class="firstbutton" onclick="document.getElementById('createform').style.display='block'">Create Form</button>
+        <button class="firstbutton" onclick="window.location='formbuilder.html';">Logout</button>
         <div id="createform" class="modal">
             <span onclick="document.getElementById('createform').style.display='none'"
             class="close" title="Close">&times;</span>
