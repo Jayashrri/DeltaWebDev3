@@ -23,6 +23,7 @@ $link->query("CREATE TABLE IF NOT EXISTS FormList (
     FormOwner varchar(25),
     FormDesc varchar(200)); ");
 $link->commit();
-
 $link->close();
+
+mkdir("FormPages");
 ?>
