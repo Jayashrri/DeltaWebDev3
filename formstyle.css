@@ -7,11 +7,15 @@ hr {
     margin-bottom: 25px;
 }
 
-h1 {
+h1, .nexthead {
     text-align: center;
     background-color: #474e5d;
     color: #fefefe;
     padding: 20px;
+}
+
+.nexthead {
+    padding: 10px;
 }
 
 button {
@@ -46,12 +50,28 @@ input:focus {
     outline: none;
 }
 
-.container {
+.container{
     background-color: #fefefe;
     margin: 5% auto 2% auto;
     border: 1px solid #888;
     width: 80%; 
     padding: 16px;
+}
+
+.formtable {
+    background-color: #fefefe;
+    width: 80%; /* Could be more or less, depending on screen size */
+    border: 1px solid #888;
+    margin: auto;
+    padding: 16px;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    text-align: center;
 }
 
 #confirm {
@@ -62,4 +82,5 @@ input:focus {
     width: 100%;
     display: inline-block;
     margin: 5px 0 22px 0;
+    text-align: center;
 }

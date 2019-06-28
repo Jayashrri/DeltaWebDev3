@@ -38,16 +38,25 @@
         <link rel="stylesheet" href="formstyle.css">
     </head>
     <body>
+        <script>
+            function viewresponse() {
+                window.location="showresponse.php";
+            }
+        </script>
+
         <h1><?php echo $formname; ?></h1>
         <div class="container">
             <h4><?php echo $formdesc; ?></h4>
+            <button type='button' onclick='viewresponse();'>View Responses</button>
             <hr>
+
             <?php if ($confirmsubmit==1){
                 echo "<div id='confirm'>Your response has been submitted successfully!</div>";
                 }
             ?>
             <form method="post" action="">
                 <?php
+                if($confirmsubmit==0){
                     $result=$link->query("SHOW COLUMNS FROM $url");
                     $count=1;
                     while($row=mysqli_fetch_assoc($result)){
@@ -64,8 +73,10 @@
                             $count++;
                         }
                     }
+                
+                echo "<button type='submit' name='submit'>Submit</button>";
+                }
                 ?>
-                <button type="submit" name="submit">Submit</button>
             </form>
         </div>
     </body>
