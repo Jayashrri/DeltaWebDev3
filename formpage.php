@@ -3,7 +3,7 @@
     $confirmsubmit=0;
 
     $link=new mysqli("localhost","root","pass123","FormBuilder");
-    $url="t_0";
+    $url=$_SESSION['CurrentURL'];
     $result=$link->query("SELECT * FROM FormList WHERE FormURL='$url'");
     while($row=mysqli_fetch_assoc($result)){
         $formname=$row['FormName'];
@@ -21,10 +21,10 @@
         $newnum++;
         $sql="INSERT INTO $url VALUES ('$newnum',";
         for($x=1;$x<$colnum;$x++){
-            $insert=$_POST[$x];
+            $insert=$_POST['f'.$x];
             $sql.="'$insert',";
         }
-        $insert=$_POST[$x];
+        $insert=$_POST['f'.$x];
         $sql.="'$insert')";
         $link->query($sql);
         $confirmsubmit=1;
@@ -54,12 +54,12 @@
                         $field=$row['Field'];
                         $type=$row['Type'];
                         if($field!="Num"){
-                            echo "<label for='".$count."'><b>".$field."</b></label>";
-                            if($type="int(11)"){
-                                echo "<input type='number' placeholder='Enter Response' name='".$count."' required><br>";
+                            echo "<label for='f".$count."'><b>".$field."</b></label>";
+                            if($type=="int(11)"){
+                                echo "<input type='number' placeholder='Enter Response' name='f".$count."' required><br>";
                             }
-                            elseif($type="varchar(100)"){
-                                echo "<input type='text' placeholder='Enter Response' name='".$field."' required><br>";
+                            elseif($type=="varchar(100)"){
+                                echo "<input type='text' placeholder='Enter Response' name='f".$count."' required><br>";
                             }
                             $count++;
                         }

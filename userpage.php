@@ -11,7 +11,14 @@
     function createpage($url) {
         $file="FormPages/".$url.".php";
         $filelink=fopen($file,'a');
-        $inserttext="";
+        $inserttext="<?php
+                session_start();
+                unset(\$_SESSION['CurrentURL']);
+                \$_SESSION['CurrentURL']='$url';
+                \$newpage='/formpage.php';
+                header('Location: '.\$newpage);
+                die();
+            ";
         fwrite($filelink,$inserttext);
         fclose($filelink);
     }
@@ -40,6 +47,7 @@
         $link->query($sql);
         $link->commit();
         $link->close();
+        createpage($formurl);
     }
 
     if(isset($_POST['submit'])){

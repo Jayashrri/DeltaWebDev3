@@ -16,10 +16,10 @@ function addfield(){
     $sql="";
     switch($radioval){
         case "Text":
-            $sql="ALTER TABLE $formurl ADD COLUMN $fieldhead varchar(100)";
+            $sql="ALTER TABLE $formurl ADD COLUMN `$fieldhead` varchar(100)";
             break;
         case "Number":
-            $sql="ALTER TABLE $formurl ADD COLUMN $fieldhead int";
+            $sql="ALTER TABLE $formurl ADD COLUMN `$fieldhead` int";
             break;
     }
     $link->query($sql);
@@ -52,7 +52,7 @@ if(isset($_POST['submit'])){
                 <h1>Insert Fields</h1>
                 <hr>
                 <label for="fieldtype"><b>Field Type</b></label><br>
-                <input type="radio" name="fieldtype" value="Text" checked="checked">Text
+                <input type="radio" name="fieldtype" value="Text" required>Text
                 <input type="radio" name="fieldtype" value="Number">Number<br>
                 <label for="fieldhead"><b>Field Heading</b></label>
                 <input type="text" placeholder="Enter Heading" name="fieldhead" required>
