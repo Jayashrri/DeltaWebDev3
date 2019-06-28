@@ -1,0 +1,65 @@
+html{
+    background-color: #888;
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+h1 {
+    text-align: center;
+    background-color: #474e5d;
+    color: #fefefe;
+    padding: 20px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    display: block;
+    margin: 10px auto;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity:1;
+}* {box-sizing: border-box}
+
+/* Full-width input fields */
+input {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* Add a background color when the inputs get focus */
+input:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.container {
+    background-color: #fefefe;
+    margin: 5% auto 2% auto;
+    border: 1px solid #888;
+    width: 80%; 
+    padding: 16px;
+}
+
+#confirm {
+    background-color: #4CAF50;
+    opacity: 0.9;
+    color: white;
+    padding: 15px;
+    width: 100%;
+    display: inline-block;
+    margin: 5px 0 22px 0;
+}

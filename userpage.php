@@ -8,6 +8,14 @@
         die();
     }
 
+    function createpage($url) {
+        $file="FormPages/".$url.".php";
+        $filelink=fopen($file,'a');
+        $inserttext="";
+        fwrite($filelink,$inserttext);
+        fclose($filelink);
+    }
+
     function generateURL() {
         $link=new mysqli("localhost","root","pass123","FormBuilder");
         $result=$link->query("SELECT COUNT(*) AS total FROM FormList");
