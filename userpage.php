@@ -48,10 +48,33 @@
     </head>
     <body>
         <h1 id="pagehead">Form Builder</h1>
-        <h3 id="greeting">Welcome, <?php
+        <h3 class="nexthead">Welcome, <?php
                         echo $_SESSION['username'];
-                    ?></h3>
+                    ?>
+        </h3>
+        <h4 class="nexthead">Created Forms</h4>
+        <div id="formtable">
+            <table>
+                <tr>
+                    <th>Form Name</th>
+                    <th>Form Description</th>
+                    <th>Form URL</th>
+                </tr>
 
+                <?php 
+                    $username=$_SESSION['username'];
+                    $link=new mysqli("localhost","root","pass123","FormBuilder");
+                    $result=$link->query("SELECT * FROM FormList WHERE FormOwner='$username'");
+                    while($row=mysqli_fetch_assoc($result)){
+                        echo "<tr>";
+                        echo "<td>".$row['FormName']."</td>";
+                        echo "<td>".$row['FormDesc']."</td>";
+                        echo "<td>".$row['FormURL'].".php</td>";
+                        echo "</tr>";
+                    }
+                ?>
+            </table>
+        </div>
         <button class="firstbutton" onclick="document.getElementById('createform').style.display='block'">Create Form</button>
         <div id="createform" class="modal">
             <span onclick="document.getElementById('createform').style.display='none'"

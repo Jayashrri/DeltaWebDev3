@@ -2,14 +2,14 @@ html{
     background-color: #888;
 }
 
-#pagehead, #greeting {
+#pagehead, .nexthead {
     text-align: center;
     background-color: #474e5d;
     color: #fefefe;
     padding: 20px;
 }
 
-#greeting {
+.nexthead {
     padding: 10px;
 }
 
@@ -52,7 +52,7 @@ button:hover {
 }
 
 /* Add padding to container elements */
-.container {
+.container, #formtable {
     padding: 16px;
 }
 
@@ -75,11 +75,26 @@ hr {
 }
   
   /* Modal Content/Box */
-.modal-content {
+.modal-content{
     background-color: #fefefe;
-    margin: 5% auto 2% auto; /* 5% from the top, 15% from the bottom and centered */
+    margin: 5% auto 2% auto;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+}
+
+#formtable {
+    background-color: #fefefe;
+    width: 80%; /* Could be more or less, depending on screen size */
+    border: 1px solid #888;
+    margin: auto;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    text-align: center;
 }
 
 /* The Close Button (x) */
