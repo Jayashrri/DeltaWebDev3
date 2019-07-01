@@ -1,9 +1,7 @@
 <?php
+include("config.php");
 error_reporting(1);
-$server = "localhost";
-$username = "root";
-$password = "pass123";
-$link = new mysqli($server,$username,$password);
+$link = new mysqli($server,$dbun,$dbpw);
 
 $link->query("CREATE DATABASE IF NOT EXISTS FormBuilder;");
 $link->commit();

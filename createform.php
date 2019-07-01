@@ -9,7 +9,8 @@ function redirect() {
 }
 
 function addfield(){
-    $link=new mysqli("localhost","root","pass123","FormBuilder");
+    include("config.php");
+    $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
     $fieldhead=$_POST['fieldhead'];
     $radioval=$_POST['fieldtype'];
     $formurl=$_SESSION['formurl'];

@@ -24,7 +24,8 @@
     }
 
     function generateURL() {
-        $link=new mysqli("localhost","root","pass123","FormBuilder");
+        include("config.php");
+        $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
         $result=$link->query("SELECT COUNT(*) AS total FROM FormList");
         $data=mysqli_fetch_assoc($result);
         $count=(int)$data['total'];
@@ -34,7 +35,8 @@
     }
     
     function newform(){
-        $link=new mysqli("localhost","root","pass123","FormBuilder");
+        include("config.php");
+        $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
         $username=$_SESSION['username'];
         $formname=$_POST['formname'];
         $formdesc=$_POST['formdesc'];
@@ -79,7 +81,8 @@
 
                 <?php 
                     $username=$_SESSION['username'];
-                    $link=new mysqli("localhost","root","pass123","FormBuilder");
+                    include("config.php");
+                    $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
                     $result=$link->query("SELECT * FROM FormList WHERE FormOwner='$username'");
                     while($row=mysqli_fetch_assoc($result)){
                         echo "<tr>";

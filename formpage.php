@@ -2,7 +2,8 @@
     session_start();
     $confirmsubmit=0;
 
-    $link=new mysqli("localhost","root","pass123","FormBuilder");
+    include("config.php");
+    $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
     $url=$_SESSION['CurrentURL'];
     $result=$link->query("SELECT * FROM FormList WHERE FormURL='$url'");
     while($row=mysqli_fetch_assoc($result)){

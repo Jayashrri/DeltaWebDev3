@@ -9,7 +9,8 @@ function redirect() {
 }
 
 function loginuser() {
-    $link=new mysqli("localhost","root","pass123","FormBuilder");
+    include("config.php");
+    $link=new mysqli($server,$dbun,$dbpass,"FormBuilder");
     $un=$_POST['username'];
     $pw=$_POST['psw'];
     global $dispmessage;
@@ -27,7 +28,8 @@ function loginuser() {
 }
 
 function signupuser() {
-    $link=new mysqli("localhost","root","pass123","FormBuilder");
+    include("config.php");
+    $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
     $un=$_POST['username'];
     $pw=$_POST['psw'];
     $pwr=$_POST['psw-repeat'];
