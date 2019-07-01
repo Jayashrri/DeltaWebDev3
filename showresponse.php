@@ -4,6 +4,10 @@ if(!isset($_SESSION['username'])){
     header("Location: formbuilder.html");
 }
 
+if(!isset($_SESSION['CurrentURL'])){
+    header("Location: formbuilder.html");
+}
+
 include("config.php");
 $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
 $url=$_SESSION['CurrentURL'];
