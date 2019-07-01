@@ -1,10 +1,10 @@
 <?php
     session_start();
-    if(!isset($_SESSION['username'])){
-        header("Location: formbuilder.html");
-    }
 
     $confirmsubmit=0;
+    if(!isset($_SESSION['CurrentURL'])){
+        header("Location: formbuilder.html");
+    }
 
     include("config.php");
     $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");

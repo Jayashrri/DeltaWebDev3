@@ -4,6 +4,10 @@ if(!isset($_SESSION['username'])){
     header("Location: formbuilder.html");
 }
 
+if(!isset($_SESSION['formurl'])){
+    header("Location: formbuilder.html");
+}
+
 function redirect() {
     ob_start();
     header('Location: userpage.php');
