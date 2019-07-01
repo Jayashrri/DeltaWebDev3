@@ -52,6 +52,10 @@
         createpage($formurl);
     }
 
+    if(!isset($_SESSION['username'])){
+        header("Location: formbuilder.html");
+    }
+
     if(isset($_POST['submit'])){
         newform();
         redirect();

@@ -1,5 +1,9 @@
 <?php
     session_start();
+    if(!isset($_SESSION['username'])){
+        header("Location: formbuilder.html");
+    }
+
     $confirmsubmit=0;
 
     include("config.php");

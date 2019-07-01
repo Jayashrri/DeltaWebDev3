@@ -54,6 +54,9 @@ function signupuser() {
 }
 
 session_start();
+if(isset($_SESSION['username'])){
+    unset($_SESSION['username']);
+}
 $dispmessage="";
 switch($_POST['form']){
     case 'L':
