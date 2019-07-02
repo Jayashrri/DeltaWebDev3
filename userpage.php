@@ -87,7 +87,7 @@
         $_SESSION['formurl']=$formurl;
         
         $link->commit();
-        $sql="CREATE TABLE $formurl (Num int)";
+        $sql="CREATE TABLE $formurl (UN varchar(25))";
         $link->query($sql);
         $tablename=$formurl."_Input";
         $sql="CREATE TABLE $tablename (

@@ -10,6 +10,7 @@
 
     $confirmsubmit=0;
     $timeout=0;
+    $blockresp=1;
     if(!isset($_SESSION['CurrentURL'])){
         header("Location: formbuilder.html");
     }
@@ -23,6 +24,7 @@
         $formname=$row['FormName'];
         $formdesc=$row['FormDesc'];
         $formtimeout=$row['FormEnd'];
+        $resplimit=$row['RespLimit'];
     }
 
     $currenttime=date("Y-m-d H:i:s");
@@ -31,11 +33,8 @@
     }
 
     if(isset($_POST['submit'])){
-        $result=$link->query("SELECT MAX(NUM) FROM $url");
-        $row=mysqli_fetch_assoc($result);
-        $newnum=$row['MAX(NUM)'];
-        $newnum++;
-        $sql="INSERT INTO $url VALUES ('$newnum',";
+        $UN=$_SESSION['currentuser'];
+        $sql="INSERT INTO $url VALUES ('$UN',";
 
         $result=$link->query("SELECT InpName FROM $tablename");
         $x=mysqli_num_rows($result);
@@ -60,6 +59,19 @@
         $link->query($sql);
         $confirmsubmit=1;
     }
+
+    if(isset($_SESSION['limit'])){
+        $blockresp=$_SESSION['limit'];
+        unset($_SESSION['limit']);
+    }
+    else{
+        if($confirmsubmit==0){
+            header("Location: formlogin.php");
+        }
+        else{
+            $blockresp=0;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -69,15 +81,16 @@
         <link rel="stylesheet" href="formstyle.css">
     </head>
     <body>
-        <script>
-            function viewresponse() {
-                window.location="showresponse.php";
-            }
-        </script>
-
         <h1><?php echo $formname; ?></h1>
         <div class="container">
             <h4><?php echo $formdesc; ?></h4>
+
+            <script>
+                function viewresponse(){
+                    window.location="showresponse.php";
+                }
+            </script>
+
             <button type='button' onclick='viewresponse();'>View Responses</button>
             <hr>
 
@@ -87,10 +100,14 @@
                 if($timeout==1){
                     echo "<div id='expired'>This form's deadline is over.</div>";
                 }
+                elseif($blockresp==1){
+                    echo "<div id='expired'>You have already submitted maximum possible number of responses.</div>";
+                }
+
             ?>
             <form method="post" action="">
                 <?php
-                if($confirmsubmit==0 && $timeout==0){
+                if($confirmsubmit==0 && $timeout==0 && $blockresp==0){
                     $result=$link->query("SELECT * FROM $tablename");
                     $count=1;
                     $prevhead="";
