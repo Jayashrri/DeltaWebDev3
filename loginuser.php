@@ -10,7 +10,7 @@ function redirect() {
 
 function loginuser() {
     include("config.php");
-    $link=new mysqli($server,$dbun,$dbpass,"FormBuilder");
+    $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
     $un=$_POST['username'];
     $pw=$_POST['psw'];
     global $dispmessage;

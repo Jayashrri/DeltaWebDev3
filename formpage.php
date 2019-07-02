@@ -9,6 +9,7 @@
     include("config.php");
     $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
     $url=$_SESSION['CurrentURL'];
+    $tablename=$url."Input";
     $result=$link->query("SELECT * FROM FormList WHERE FormURL='$url'");
     while($row=mysqli_fetch_assoc($result)){
         $formname=$row['FormName'];
@@ -16,20 +17,20 @@
     }
 
     if(isset($_POST['submit'])){
-        $result=$link->query("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='$url'");
-        $row=mysqli_fetch_assoc($result);
-        $colnum=(int)$row['COUNT(*)'];
-        $colnum--;
         $result=$link->query("SELECT MAX(NUM) FROM $url");
         $row=mysqli_fetch_assoc($result);
         $newnum=$row['MAX(NUM)'];
         $newnum++;
         $sql="INSERT INTO $url VALUES ('$newnum',";
-        for($x=1;$x<$colnum;$x++){
-            $insert=$_POST['f'.$x];
+
+        $result=$link->query("SELECT InpName FROM $tablename");
+        $x=mysqli_num_rows($result);
+        while(($row=mysqli_fetch_assoc($result)) && $x>1){
+            $fn=$row['InpName'];
+            $insert=$_POST[$fn];
             $sql.="'$insert',";
         }
-        $insert=$_POST['f'.$x];
+        $row=mysqli_fetch_assoc($result);
         $sql.="'$insert')";
         $link->query($sql);
         $confirmsubmit=1;
@@ -62,21 +63,28 @@
             <form method="post" action="">
                 <?php
                 if($confirmsubmit==0){
-                    $result=$link->query("SHOW COLUMNS FROM $url");
+                    $result=$link->query("SELECT * FROM $tablename");
                     $count=1;
                     while($row=mysqli_fetch_assoc($result)){
-                        $field=$row['Field'];
-                        $type=$row['Type'];
-                        if($field!="Num"){
-                            echo "<label for='f".$count."'><b>".$field."</b></label>";
-                            if($type=="int(11)"){
-                                echo "<input type='number' placeholder='Enter Response' name='f".$count."' required><br>";
-                            }
-                            elseif($type=="varchar(100)"){
-                                echo "<input type='text' placeholder='Enter Response' name='f".$count."' required><br>";
-                            }
-                            $count++;
+                        $field=$row['Heading'];
+                        $type=$row['InpType'];
+                        $fieldname=$row['InpName'];
+                        $fieldval=$row['InpValue'];
+                        echo "<label for='$fieldname'><b>".$field."</b></label>";
+                        if($type=="Number"){
+                            echo "<input type='number' placeholder='Enter Response' name='$fieldname' value='$fieldval' required><br>";
                         }
+                        elseif($type=="Text"){
+                            echo "<input type='text' placeholder='Enter Response' name='$fieldname' value='$fieldval' required><br>";
+                        }
+                        elseif($type=="Radio"){
+                            echo "<input type='radio' placeholder='Enter Response' name='$fieldname' value='$fieldval' required><br>";
+                        }
+                        elseif($type=="Checkbox"){
+                            echo "<input type='checkbox' placeholder='Enter Response' name='$fieldname' value='$fieldval' required><br>";
+                        }
+
+                        $count++;
                     }
                 
                 echo "<button type='submit' name='submit'>Submit</button>";
