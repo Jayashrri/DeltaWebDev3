@@ -10,7 +10,7 @@
 
     function createpage($url) {
         $file="FormPages/".$url.".php";
-        $filelink=fopen($file,'a');
+        $filelink=fopen($file,'w');
         $inserttext="<?php
                 session_start();
                 unset(\$_SESSION['CurrentURL']);
@@ -18,6 +18,7 @@
                 \$newpage='/formpage.php';
                 header('Location: '.\$newpage);
                 die();
+                ?>
             ";
         fwrite($filelink,$inserttext);
         fclose($filelink);
@@ -40,10 +41,15 @@
         $username=$_SESSION['username'];
         $formname=$_POST['formname'];
         $formdesc=$_POST['formdesc'];
+        $formdate=$_POST['formdate'];
+        $formtime=$_POST['formtime'];
+        $response=$_POST['response'];
+
+        $combined=date('Y-m-d H:i:s', strtotime("$formdate $formtime"));
+
         $formurl=generateURL();
         $_SESSION['formurl']=$formurl;
-        $sql="INSERT INTO FormList VALUES ('$formname', '$formurl', '$username', '$formdesc')";
-        $link->query($sql);
+        
         $link->commit();
         $sql="CREATE TABLE $formurl (Num int)";
         $link->query($sql);
@@ -56,6 +62,8 @@
         )";
         $link->query($sql);
         $link->commit();
+        $sql="INSERT INTO FormList VALUES ('$formname', '$formurl', '$username', '$formdesc', '$response', '$combined')";
+        $link->query($sql);
         $link->close();
         createpage($formurl);
     }
@@ -116,8 +124,20 @@
                 <h1>Create Form</h1><hr>
                 <label for="formname"><b>Form Name</b></label>
                 <input type="text" placeholder="Enter Form Name" name="formname" required="required"><br>
+                
                 <label for="formdesc"><b>Form Description</b></label><br>
                 <textarea rows="5" cols="30" name="formdesc"></textarea>
+
+                <label for="response"><b>Permissions for Viewing Responses</b></label><br>
+                <input type="radio" name="response" value="Creator Only">Creator Only<br>
+                <input type="radio" name="response" value="Everyone">Everyone<br>
+
+                <label for="formdate"><b>Form Timeout Date</b></label>
+                <input type="date" name="formdate"><br>
+
+                <label for="formtime"><b>Form Timeout Time</b></label>
+                <input type="time" name="formtime"><br>
+
                 <button type="submit" name="submit">Create Form</button>
             </div>
             </form>

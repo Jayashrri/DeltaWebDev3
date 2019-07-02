@@ -19,7 +19,9 @@ $link->query("CREATE TABLE IF NOT EXISTS FormList (
     FormName varchar(25),
     FormURL varchar(50),
     FormOwner varchar(25),
-    FormDesc varchar(200)); ");
+    FormDesc varchar(200),
+    FormPermissions varchar(20),
+    FormEnd varchar(25) ); ");
 $link->commit();
 $link->close();
 

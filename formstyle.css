@@ -78,7 +78,7 @@ td {
     text-align: center;
 }
 
-#confirm {
+#confirm, #expired {
     background-color: #4CAF50;
     opacity: 0.9;
     color: white;
@@ -87,4 +87,8 @@ td {
     display: inline-block;
     margin: 5px 0 22px 0;
     text-align: center;
+}
+
+#expired {
+    background-color: #f44336;
 }

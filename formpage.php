@@ -9,6 +9,7 @@
     }
 
     $confirmsubmit=0;
+    $timeout=0;
     if(!isset($_SESSION['CurrentURL'])){
         header("Location: formbuilder.html");
     }
@@ -21,6 +22,12 @@
     while($row=mysqli_fetch_assoc($result)){
         $formname=$row['FormName'];
         $formdesc=$row['FormDesc'];
+        $formtimeout=$row['FormEnd'];
+    }
+
+    $currenttime=date("Y-m-d H:i:s");
+    if($currenttime>$formtimeout){
+        $timeout=1;
     }
 
     if(isset($_POST['submit'])){
@@ -76,12 +83,14 @@
 
             <?php if ($confirmsubmit==1){
                 echo "<div id='confirm'>Your response has been submitted successfully!</div>";
-                echo $sql;
+                }
+                if($timeout==1){
+                    echo "<div id='expired'>This form's deadline is over.</div>";
                 }
             ?>
             <form method="post" action="">
                 <?php
-                if($confirmsubmit==0){
+                if($confirmsubmit==0 && $timeout==0){
                     $result=$link->query("SELECT * FROM $tablename");
                     $count=1;
                     $prevhead="";
