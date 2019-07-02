@@ -47,7 +47,7 @@
         $link->commit();
         $sql="CREATE TABLE $formurl (Num int)";
         $link->query($sql);
-        $tablename=$formurl."Input";
+        $tablename=$formurl."_Input";
         $sql="CREATE TABLE $tablename (
             Heading varchar(100),
             InpType varchar(20),

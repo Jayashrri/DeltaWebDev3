@@ -24,7 +24,11 @@ function addfield(){
     $fieldvalue=$_POST['fieldvalue'];
 
     $formurl=$_SESSION['formurl'];
-    $tablename=$formurl."Input";
+    $tablename=$formurl."_Input";
+
+    if($radioval=="Checkbox"){
+        $fieldname.="[]";
+    }
 
     $sql="INSERT INTO $tablename VALUES ('$fieldhead','$radioval','$fieldname','$fieldvalue')";
     $link->query($sql);
@@ -61,32 +65,27 @@ if(isset($_POST['submit'])){
     </head>
     <body>
         <div id="makeform" class="modal">
-            <form id="repeatform" class="modal-content" method="post" action="">
+            <form id="repeatform" name="repeatform" class="modal-content" method="post" action="">
             <div class="container">
                 <h1>Insert Input Fields</h1>
-                <p>Please add the desired input fields for the form, where the Name, Type, and Value values hold the same meaning as their corresponding HTML input attributes do.</p>
+                <p>Please add the desired input fields for the form. Please ensure that the identifying name does not contain any spaces.</p>
                 <hr>
                 <div id="selecttype">
                     <label for="fieldtype"><b>Field Type</b></label><br>
-                    <input type="radio" name="fieldtype" id="t1" value="Text" required>Text
-                    <input type="radio" name="fieldtype" id="t2" value="Radio">Radio
-                    <input type="radio" name="fieldtype" id="t3" value="Checkbox">Checkbox
-                    <input type="radio" name="fieldtype" id="t4" value="Number">Number<br>
-                </div>
-                <div id="forsingle">
-                    <label for="fieldhead"><b>Field Heading</b></label>
-                    <input type="text" placeholder="Enter Heading" name="fieldhead" required>
+                    <input type="radio" name="fieldtype" value="Text" required>Text
+                    <input type="radio" name="fieldtype" value="Radio">Radio
+                    <input type="radio" name="fieldtype" value="Checkbox">Checkbox
+                    <input type="radio" name="fieldtype" value="Number">Number<br>
 
-                    <label for="fieldname"><b>Identifying Name</b></label>
-                    <input type="text" placeholder="Enter Name" name="fieldname" id="singlename" required>
+                    <div id="forsingle">
+                        <label for="fieldhead"><b>Field Heading</b></label>
+                        <input type="text" placeholder="Enter Heading" name="fieldhead" required>
+
+                        <label for="fieldname"><b>Identifying Name</b></label>
+                        <input type="text" placeholder="Enter Name" name="fieldname" id="fieldname" required>
+                    </div>
                 </div>
                 <div id="formultiple">
-                    <label for="fieldhead"><b>Field Heading</b></label>
-                    <input type="text" placeholder="Enter Heading" name="fieldhead" required>
-
-                    <label for="fieldname"><b>Identifying Name</b></label>
-                    <input type="text" placeholder="Enter Name" name="fieldname" id="multiname" required>
-
                     <label for="fieldvalue"><b>Field Value</b></label>
                     <input type="text" placeholder="Enter Value" name="fieldvalue">
                 </div>

@@ -58,6 +58,10 @@ input:focus {
     padding: 16px;
 }
 
+input[type="radio"], input[type="checkbox"] {
+    width: 0%;
+}
+
 .formtable {
     background-color: #fefefe;
     width: 80%; /* Could be more or less, depending on screen size */

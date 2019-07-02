@@ -1,6 +1,13 @@
 <?php
     session_start();
 
+    function endswith($string) {
+        $strlen = strlen($string);
+        $testlen = strlen("[]");
+        if ($testlen > $strlen) return false;
+        return substr_compare($string, "[]", $strlen - $testlen, $testlen) === 0;
+    }
+
     $confirmsubmit=0;
     if(!isset($_SESSION['CurrentURL'])){
         header("Location: formbuilder.html");
@@ -9,7 +16,7 @@
     include("config.php");
     $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
     $url=$_SESSION['CurrentURL'];
-    $tablename=$url."Input";
+    $tablename=$url."_Input";
     $result=$link->query("SELECT * FROM FormList WHERE FormURL='$url'");
     while($row=mysqli_fetch_assoc($result)){
         $formname=$row['FormName'];
@@ -25,13 +32,24 @@
 
         $result=$link->query("SELECT InpName FROM $tablename");
         $x=mysqli_num_rows($result);
-        while(($row=mysqli_fetch_assoc($result)) && $x>1){
+        $lastname="";
+        while($row=mysqli_fetch_assoc($result)){
+            $insert="";
             $fn=$row['InpName'];
-            $insert=$_POST[$fn];
-            $sql.="'$insert',";
+            if(endswith($fn)){
+                $fn=rtrim($fn,"[]");
+                $insert=implode(",",$_POST[$fn]);
+            }
+            else{
+                $insert=$_POST[$fn];
+            }
+            if($fn!=$lastname){
+                $sql.="'$insert',";
+            }
+            $lastname=$fn;
         }
-        $row=mysqli_fetch_assoc($result);
-        $sql.="'$insert')";
+        $sql=rtrim($sql,',');
+        $sql.=");";
         $link->query($sql);
         $confirmsubmit=1;
     }
@@ -58,6 +76,7 @@
 
             <?php if ($confirmsubmit==1){
                 echo "<div id='confirm'>Your response has been submitted successfully!</div>";
+                echo $sql;
                 }
             ?>
             <form method="post" action="">
@@ -65,12 +84,15 @@
                 if($confirmsubmit==0){
                     $result=$link->query("SELECT * FROM $tablename");
                     $count=1;
+                    $prevhead="";
                     while($row=mysqli_fetch_assoc($result)){
                         $field=$row['Heading'];
                         $type=$row['InpType'];
                         $fieldname=$row['InpName'];
                         $fieldval=$row['InpValue'];
-                        echo "<label for='$fieldname'><b>".$field."</b></label>";
+                        if($field!=$prevhead){
+                            echo "<label for='$fieldname'><b>".$field."</b></label><br>";
+                        }
                         if($type=="Number"){
                             echo "<input type='number' placeholder='Enter Response' name='$fieldname' value='$fieldval' required><br>";
                         }
@@ -78,12 +100,12 @@
                             echo "<input type='text' placeholder='Enter Response' name='$fieldname' value='$fieldval' required><br>";
                         }
                         elseif($type=="Radio"){
-                            echo "<input type='radio' placeholder='Enter Response' name='$fieldname' value='$fieldval' required><br>";
+                            echo "<input type='radio' name='$fieldname' value='$fieldval' required>$fieldval<br>";
                         }
                         elseif($type=="Checkbox"){
-                            echo "<input type='checkbox' placeholder='Enter Response' name='$fieldname' value='$fieldval' required><br>";
+                            echo "<input type='checkbox' name='$fieldname' value='$fieldval' required>$fieldval<br>";
                         }
-
+                        $prevhead=$field;
                         $count++;
                     }
                 
