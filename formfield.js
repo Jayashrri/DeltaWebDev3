@@ -1,7 +1,7 @@
-const nextbtn = document.getElementById('nextbtn');
 const formultiple = document.getElementById('formultiple');
 const submitbtn = document.getElementById('submitbtn');
 const forsingle = document.getElementById('forsingle');
+const resetbtn = document.getElementById('resetbtn');
 
 var fieldname=document.getElementById('fieldname');
 
@@ -13,7 +13,6 @@ var radios = document.forms["repeatform"].elements["fieldtype"];
 radios[0].onclick = function() {
     formultiple.style.display="none";
     forsingle.style.display="block";
-    nextbtn.style.display="none";
     submitbtn.style.display="block";
 }
 radios[3].onclick = function() {
@@ -23,39 +22,21 @@ radios[3].onclick = function() {
     submitbtn.style.display="block";
 }
 radios[1].onclick = function() {
-    formultiple.style.display="none";
+    formultiple.style.display="block";
     forsingle.style.display="block";
-    nextbtn.style.display="block";
-    submitbtn.style.display="none";
+    submitbtn.style.display="block";
 }
 radios[2].onclick = function() {
-    formultiple.style.display="none";
+    formultiple.style.display="block";
     forsingle.style.display="block";
-    nextbtn.style.display="block";
-    submitbtn.style.display="none";
+    submitbtn.style.display="block";
 }
 
-function typeselect() {
-    if(nextbtn.innerHTML=="Next"){
-        for(i=0;i<4;i++){
-            radios[i].readOnly=true;
-        }
-        fieldname.readOnly=true;
-        submitbtn.style.display="block";
-        nextbtn.innerHTML="Back";
-        formultiple.style.display="block";
-    }
-    else if(nextbtn.innerHTML=="Back"){
-        for(i=0;i<4;i++){
-            radios[i].readOnly=false;
-        }
-        fieldname.readOnly=false;
-        forsingle.style.display="none";
-        formultiple.style.display="none";
-        submitbtn.style.display="none";
-        nextbtn.innerHTML="Next";
-        nextbtn.style.display="none";
-    }
+function resetform(){
+    document.getElementById('fieldhead').disabled=false;
+    document.getElementById('fieldhead').value="";
+    document.getElementById('fieldname').disabled=false;
+    document.getElementById('fieldname').value="";
 }
 
 function checkspace(event) {  
@@ -64,4 +45,4 @@ function checkspace(event) {
 }
 
 fieldname.onkeypress=checkspace;
-nextbtn.onclick=typeselect;
+resetbtn.onclick=resetform;

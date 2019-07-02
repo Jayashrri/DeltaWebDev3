@@ -40,12 +40,48 @@
         $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
         $username=$_SESSION['username'];
         $formname=$_POST['formname'];
-        $formdesc=$_POST['formdesc'];
-        $formdate=$_POST['formdate'];
-        $formtime=$_POST['formtime'];
+        if(!isset($_POST['formdesc']) || empty($_POST['formdesc'])){
+            $formdesc=NULL;
+        }
+        else{
+            $formdesc=$_POST['formdesc'];
+        }
+
+        if(!isset($_POST['formdesc']) || empty($_POST['formdesc'])){
+            $formdesc=NULL;
+        }
+        else{
+            $formdesc=$_POST['formdesc'];
+        }
+
+        if(!isset($_POST['formdate']) || empty($_POST['formdate'])){
+            $formdate=NULL;
+        }
+        else{
+            $formdate=$_POST['formdate'];
+        }
+
+        if(!isset($_POST['formtime']) || empty($_POST['formtime'])){
+            $formtime=NULL;
+        }
+        else{
+            $formtime=$_POST['formtime'];
+        }
         $response=$_POST['response'];
 
-        $combined=date('Y-m-d H:i:s', strtotime("$formdate $formtime"));
+        if(!isset($_POST['resplimit']) || empty($_POST['resplimit'])){
+            $resplimit=NULL;
+        }
+        else{
+            $resplimit=$_POST['resplimit'];
+        }
+
+        if(isset($formdate) && isset($formtime)){
+            $combined=date('Y-m-d H:i:s', strtotime("$formdate $formtime"));
+        }
+        else{
+            $combined=NULL;
+        }
 
         $formurl=generateURL();
         $_SESSION['formurl']=$formurl;
@@ -62,7 +98,7 @@
         )";
         $link->query($sql);
         $link->commit();
-        $sql="INSERT INTO FormList VALUES ('$formname', '$formurl', '$username', '$formdesc', '$response', '$combined')";
+        $sql="INSERT INTO FormList VALUES ('$formname', '$formurl', '$username', '$formdesc', '$response', '$combined', '$resplimit')";
         $link->query($sql);
         $link->close();
         createpage($formurl);
@@ -129,7 +165,7 @@
                 <textarea rows="5" cols="30" name="formdesc"></textarea>
 
                 <label for="response"><b>Permissions for Viewing Responses</b></label><br>
-                <input type="radio" name="response" value="Creator Only">Creator Only<br>
+                <input type="radio" name="response" value="Creator Only" required>Creator Only<br>
                 <input type="radio" name="response" value="Everyone">Everyone<br>
 
                 <label for="formdate"><b>Form Timeout Date</b></label>
@@ -137,6 +173,9 @@
 
                 <label for="formtime"><b>Form Timeout Time</b></label>
                 <input type="time" name="formtime"><br>
+
+                <label for="resplimit"><b>Number of Responses Per User</b></label>
+                <input type="number" name="resplimit">
 
                 <button type="submit" name="submit">Create Form</button>
             </div>

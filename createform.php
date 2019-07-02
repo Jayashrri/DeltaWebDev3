@@ -15,9 +15,17 @@ function redirect() {
     die();
 }
 
+$fieldhead="";
+$fieldname="";
+$radioval="";
+
 function addfield(){
     include("config.php");
     $link=new mysqli($server,$dbun,$dbpw,"FormBuilder");
+
+    global $fieldhead;
+    global $fieldname;
+    global $radioval;
     $fieldhead=$_POST['fieldhead'];
     $radioval=$_POST['fieldtype'];
     $fieldname=$_POST['fieldname'];
@@ -79,20 +87,30 @@ if(isset($_POST['submit'])){
 
                     <div id="forsingle">
                         <label for="fieldhead"><b>Field Heading</b></label>
-                        <input type="text" placeholder="Enter Heading" name="fieldhead" required>
+                        <input type="text" placeholder="Enter Heading" id="fieldhead" name="fieldhead" required 
+                            <?php 
+                                if($radioval=="Radio" || $radioval=="Checkbox"){  
+                                    echo "value='$fieldhead' disabled";      
+                                } 
+                            ?>
+                        >
 
                         <label for="fieldname"><b>Identifying Name</b></label>
-                        <input type="text" placeholder="Enter Name" name="fieldname" id="fieldname" required>
+                        <input type="text" placeholder="Enter Name" name="fieldname" id="fieldname" required
+                            <?php 
+                                if($radioval=="Radio" || $radioval=="Checkbox"){  
+                                    echo "value='$fieldname' disabled";      
+                                } 
+                            ?>
+                        >
                     </div>
                 </div>
                 <div id="formultiple">
                     <label for="fieldvalue"><b>Field Value</b></label>
                     <input type="text" placeholder="Enter Value" name="fieldvalue">
                 </div>
-                <div id="lockbuttons">
-                    <button type="button" id="nextbtn">Next</button>
-                </div>
                 <input type="hidden" name="form" value="M">
+                <button type="button" id="resetbtn">Reset</button>
                 <button type="submit" id="submitbtn" name="submit">Add</button>
             </form>
             <form action="" method="post">
