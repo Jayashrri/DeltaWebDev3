@@ -41,28 +41,28 @@
         $username=$_SESSION['username'];
         $formname=$_POST['formname'];
         if(!isset($_POST['formdesc']) || empty($_POST['formdesc'])){
-            $formdesc=NULL;
+            $formdesc="";
         }
         else{
             $formdesc=$_POST['formdesc'];
         }
 
         if(!isset($_POST['formdesc']) || empty($_POST['formdesc'])){
-            $formdesc=NULL;
+            $formdesc="";
         }
         else{
             $formdesc=$_POST['formdesc'];
         }
 
         if(!isset($_POST['formdate']) || empty($_POST['formdate'])){
-            $formdate=NULL;
+            $formdate="";
         }
         else{
             $formdate=$_POST['formdate'];
         }
 
         if(!isset($_POST['formtime']) || empty($_POST['formtime'])){
-            $formtime=NULL;
+            $formtime="";
         }
         else{
             $formtime=$_POST['formtime'];
@@ -70,17 +70,17 @@
         $response=$_POST['response'];
 
         if(!isset($_POST['resplimit']) || empty($_POST['resplimit'])){
-            $resplimit=NULL;
+            $resplimit=0;
         }
         else{
             $resplimit=$_POST['resplimit'];
         }
 
-        if(isset($formdate) && isset($formtime)){
+        if(!empty($formdate) && !empty($formtime)){
             $combined=date('Y-m-d H:i:s', strtotime("$formdate $formtime"));
         }
         else{
-            $combined=NULL;
+            $combined="";
         }
 
         $formurl=generateURL();

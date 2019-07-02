@@ -26,7 +26,7 @@
     }
 
     $currenttime=date("Y-m-d H:i:s");
-    if($currenttime>$formtimeout){
+    if(!empty($formtimeout) && $currenttime>$formtimeout){
         $timeout=1;
     }
 
