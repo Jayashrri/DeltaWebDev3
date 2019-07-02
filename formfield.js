@@ -33,9 +33,9 @@ radios[2].onclick = function() {
 }
 
 function resetform(){
-    document.getElementById('fieldhead').disabled=false;
+    document.getElementById('fieldhead').readOnly=false;
     document.getElementById('fieldhead').value="";
-    document.getElementById('fieldname').disabled=false;
+    document.getElementById('fieldname').readOnly=false;
     document.getElementById('fieldname').value="";
 }
 

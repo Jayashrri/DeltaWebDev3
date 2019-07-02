@@ -90,7 +90,7 @@ if(isset($_POST['submit'])){
                         <input type="text" placeholder="Enter Heading" id="fieldhead" name="fieldhead" required 
                             <?php 
                                 if($radioval=="Radio" || $radioval=="Checkbox"){  
-                                    echo "value='$fieldhead' disabled";      
+                                    echo "value='$fieldhead' readonly";      
                                 } 
                             ?>
                         >
@@ -99,7 +99,7 @@ if(isset($_POST['submit'])){
                         <input type="text" placeholder="Enter Name" name="fieldname" id="fieldname" required
                             <?php 
                                 if($radioval=="Radio" || $radioval=="Checkbox"){  
-                                    echo "value='$fieldname' disabled";      
+                                    echo "value='$fieldname' readonly";      
                                 } 
                             ?>
                         >
