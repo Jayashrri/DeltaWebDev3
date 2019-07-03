@@ -42,7 +42,6 @@ if(isset($_POST['submit'])){
     <head>
         <title><?php echo $formname; ?></title>
         <link rel="stylesheet" href="responsestyle.css">
-        <script src="responsedisplay.js" async></script>
     </head>
     <body>
         <h1 class="pagehead"><?php echo $formname; ?></h1>
