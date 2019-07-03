@@ -41,7 +41,9 @@ if(isset($_POST['submit'])){
         }
     }
     else{
+        $UN=$_POST['username'];
         $_SESSION['limit']=0;
+        $_SESSION['currentuser']=$UN;
         header("Location: formpage.php");
         die();
     }

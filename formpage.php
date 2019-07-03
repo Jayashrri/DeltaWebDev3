@@ -34,14 +34,24 @@
 
     if(isset($_POST['submit'])){
         $UN=$_SESSION['currentuser'];
-        $sql="INSERT INTO $url VALUES ('$UN',";
+        $values=array();
+        $types=array();
 
-        $result=$link->query("SELECT InpName FROM $tablename");
-        $x=mysqli_num_rows($result);
+        $result=$link->query("SELECT InpName,InpType FROM $tablename");
         $lastname="";
         while($row=mysqli_fetch_assoc($result)){
             $insert="";
+            $inserttype="";
             $fn=$row['InpName'];
+
+            $t=$row['InpType'];
+            if($t=="Number"){
+                $inserttype="i";
+            }
+            else{
+                $inserttype="s";
+            }
+
             if(endswith($fn)){
                 $fn=rtrim($fn,"[]");
                 $insert=implode(",",$_POST[$fn]);
@@ -50,13 +60,25 @@
                 $insert=$_POST[$fn];
             }
             if($fn!=$lastname){
-                $sql.="'$insert',";
+                array_push($values,$insert);
+                array_push($types,$inserttype);
             }
             $lastname=$fn;
         }
-        $sql=rtrim($sql,',');
-        $sql.=");";
-        $link->query($sql);
+
+        $sql="INSERT INTO $url VALUES ('$UN'";
+        for($x=0;$x<count($values);$x++){
+            $sql.=",?";
+        }
+        $sql.=")";
+        $addval=$link->prepare($sql);
+        
+        $t=implode("",$types);
+        $valuelist=array_values($values);
+
+        $addval->bind_param($t,...$valuelist);
+        $addval->execute();
+
         $confirmsubmit=1;
     }
 
