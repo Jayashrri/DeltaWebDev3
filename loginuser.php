@@ -14,8 +14,10 @@ function loginuser() {
     $un=$_POST['username'];
     $pw=$_POST['psw'];
     global $dispmessage;
-    $sql="SELECT UN,PW FROM UserDets WHERE UN='$un' AND PW='$pw'";
-    $check=$link->query($sql);
+    $sql=$link->prepare("SELECT UN,PW FROM UserDets WHERE UN=? AND PW=?");
+    $sql->bind_param("ss",$un,$pw);
+    $sql->execute();
+    $check=$sql->get_result();
     if($check->num_rows==1){
         $_SESSION['username']=$un;
         redirect();

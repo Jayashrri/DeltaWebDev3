@@ -21,7 +21,10 @@ if(isset($_POST['submit'])){
     if($resplimit!=0){
         $UN=$_POST['username'];
         $PW=$_POST['psw'];
-        $result=$link->query("SELECT * FROM UserDets WHERE UN='$UN' AND PW='$PW'");
+        $sql=$link->prepare("SELECT * FROM UserDets WHERE UN=? AND PW=?");
+        $sql->bind_param("ss",$UN,$PW);
+        $sql->execute();
+        $result=$sql->get_result();
         if(mysqli_num_rows($result)==1){
             $result=$link->query("SELECT * FROM $url WHERE UN='$UN'");
             $submitted=mysqli_num_rows($result);
