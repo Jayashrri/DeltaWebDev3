@@ -144,7 +144,7 @@
                         echo "<tr>";
                         echo "<td>".$row['FormName']."</td>";
                         echo "<td>".$row['FormDesc']."</td>";
-                        echo "<td>".$row['FormURL'].".php</td>";
+                        echo "<td><a href='/FormPages/".$row['FormURL'].".php'>".$row['FormURL'].".php</a></td>";
                         echo "</tr>";
                     }
                 ?>
